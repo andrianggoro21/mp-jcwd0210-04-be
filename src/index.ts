@@ -8,6 +8,11 @@ dotenv.config({
 const port: number = Number(process.env.PORT) || 8000; 
 const app = express();
 
+app.use(express.json());
+
+import routerProduct = require("./routes/productRouter");
+app.use("/product", routerProduct)
+
 app.listen(port, () => {
     console.log(`server started on port ${port}`);
 })
