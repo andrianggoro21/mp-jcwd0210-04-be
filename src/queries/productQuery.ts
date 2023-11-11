@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const createProductQuery = async (productName: string, categoryId: number, price: number, stock: number, description: string, image: string) => {
+const createProductQuery = async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string) => {
     try {
         const res = await prisma.products.create({
             data: {
@@ -11,7 +11,9 @@ const createProductQuery = async (productName: string, categoryId: number, price
                 price:  price,
                 stock:  stock,
                 description: description,
+                statusId: statusId,
                 image:  image,
+                
             },
         });
         return res;
@@ -20,6 +22,16 @@ const createProductQuery = async (productName: string, categoryId: number, price
     } 
 };
 
+const getProductAllQuery =async () => {
+    try {
+        const res = await prisma.products.findMany()
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
-    createProductQuery
+    createProductQuery,
+    getProductAllQuery
 }
