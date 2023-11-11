@@ -34,14 +34,22 @@ model Categories {
   product       Products[]  
 }
 
-model Product {
+model Status {
+  id            Int       @id @default(autoincrement())
+  statusName    String
+  product       Products[]
+}
+
+model Products {
   id            Int       @id @default(autoincrement())
   productName   String
   category      Categories  @relation(fields: [categoryId], references: [id])
   categoryId    Int
-  price         Decimal   
+  price         Decimal   @db.Decimal(10, 0)
   stock         Int  
   description   String    @db.VarChar(1000)
+  status        Status    @relation(fields: [statusId], references: [id])
+  statusId      Int
   image         String    @db.VarChar(1000)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -52,11 +60,11 @@ model Transactions {
   id              Int       @id @default(autoincrement())
   date            DateTime  @default(now())
   totalQuantity   Int   
-  totalPrice      Decimal
+  totalPrice      Decimal   @db.Decimal(10, 0)
   payment_method  Payment_Method @relation(fields: [payment_methodId], references: [id]) 
   payment_methodId  Int  
-  paymentAmount   Decimal  
-  paymentChange   Decimal
+  paymentAmount   Decimal   @db.Decimal(10, 0)
+  paymentChange   Decimal   @db.Decimal(10, 0)
   transaction_details Transaction_Details[]    
 }
 
@@ -67,7 +75,7 @@ model Transaction_Details {
   transaction   Transactions  @relation(fields: [transactionId], references: [id])
   transactionId Int
   quantity      Int
-  price         Decimal  
+  price         Decimal   @db.Decimal(10, 0)  
 }
 
 model Payment_Method {

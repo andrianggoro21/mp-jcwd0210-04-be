@@ -29,13 +29,22 @@ CREATE TABLE `Categories` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Status` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `statusName` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Products` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `productName` VARCHAR(191) NOT NULL,
     `categoryId` INTEGER NOT NULL,
-    `price` DECIMAL(65, 30) NOT NULL,
+    `price` DECIMAL(10, 0) NOT NULL,
     `stock` INTEGER NOT NULL,
     `description` VARCHAR(1000) NOT NULL,
+    `statusId` INTEGER NOT NULL,
     `image` VARCHAR(1000) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -48,10 +57,10 @@ CREATE TABLE `Transactions` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `totalQuantity` INTEGER NOT NULL,
-    `totalPrice` DECIMAL(65, 30) NOT NULL,
+    `totalPrice` DECIMAL(10, 0) NOT NULL,
     `payment_methodId` INTEGER NOT NULL,
-    `paymentAmount` DECIMAL(65, 30) NOT NULL,
-    `paymentChange` DECIMAL(65, 30) NOT NULL,
+    `paymentAmount` DECIMAL(10, 0) NOT NULL,
+    `paymentChange` DECIMAL(10, 0) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -62,7 +71,7 @@ CREATE TABLE `Transaction_Details` (
     `productId` INTEGER NOT NULL,
     `transactionId` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
-    `price` DECIMAL(65, 30) NOT NULL,
+    `price` DECIMAL(10, 0) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -80,6 +89,9 @@ ALTER TABLE `Users` ADD CONSTRAINT `Users_roleId_fkey` FOREIGN KEY (`roleId`) RE
 
 -- AddForeignKey
 ALTER TABLE `Products` ADD CONSTRAINT `Products_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Categories`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Products` ADD CONSTRAINT `Products_statusId_fkey` FOREIGN KEY (`statusId`) REFERENCES `Status`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transactions` ADD CONSTRAINT `Transactions_payment_methodId_fkey` FOREIGN KEY (`payment_methodId`) REFERENCES `Payment_Method`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
