@@ -29,7 +29,25 @@ const getProductAllController = async (req: Request, res: Response) => {
     }
 }
 
+const updateProductController = async (req: Request, res: Response) => {
+    try {
+        const {productId} = req.params
+        const parsedProductId = parseInt(productId, 10);
+        const {productName, categoryId, price, stock, description, statusId, image} = req.body
+        const result = await productService.updateProductService(productName, categoryId, price, stock, description, statusId, image, parsedProductId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in createProductController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+        
+    }
+}
+
 export = {
     createProductController,
-    getProductAllController
+    getProductAllController,
+    updateProductController
 }

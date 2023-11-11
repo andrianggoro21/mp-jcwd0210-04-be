@@ -5,5 +5,6 @@ import productController from "../controllers/productController";
 
 router.post("/", productController.createProductController)
 router.get("/", productController.getProductAllController)
+router.patch("/update/:productId", productController.updateProductController)
 
 export = router;
