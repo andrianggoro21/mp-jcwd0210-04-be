@@ -50,7 +50,6 @@ const categoryStorage = multer.diskStorage({
     limits,
   }).single('image');
 
-  
 
   export = {
     uploadProductFile,

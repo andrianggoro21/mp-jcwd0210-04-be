@@ -133,5 +133,4 @@ export = {
     findProductQueryNameCategory,
     searchProductQuery,
     filterProductQuery,
-
 }
