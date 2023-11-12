@@ -31,6 +31,7 @@ model Users {
 model Categories {
   id            Int       @id @default(autoincrement())
   categoryName  String
+  image         String    @db.VarChar(1000)
   product       Products[]  
 }
 

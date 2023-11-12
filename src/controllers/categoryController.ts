@@ -4,7 +4,7 @@ import categoryService from "../services/categoryService";
 const createCategoryController = async (req: Request, res: Response) => {
     try {
         const {categoryName} = req.body
-        const result = await categoryService.createCategoryService(categoryName)
+        const result = await categoryService.createCategoryService(categoryName, req.file?.filename || '')
         return res.status(200).json({
             message: "success",
             data: result
@@ -28,7 +28,24 @@ const getCategoryAllController = async (req: Request, res: Response) => {
     }
 }
 
+const updateCategoryController = async (req: Request, res: Response) => {
+    try {
+        const {categoryId} = req.params
+        const parsedCategoryId = parseInt(categoryId, 10);
+        const {categoryName} = req.body
+        const result = await categoryService.updateCategoryService(categoryName,  req.file?.filename || '', parsedCategoryId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in updateControllerController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
 export = {
     createCategoryController,
-    getCategoryAllController
+    getCategoryAllController,
+    updateCategoryController
 }

@@ -13,7 +13,6 @@ const createProductQuery = async (productName: string, categoryId: number, price
                 description: description,
                 statusId: statusId,
                 image:  image,
-                
             },
         });
         return res;
@@ -65,6 +64,8 @@ const updateProductQuery =async (productName: string, categoryId: number, price:
         throw err
     }
 }
+
+
 
 export = {
     createProductQuery,

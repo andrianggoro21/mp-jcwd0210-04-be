@@ -16,7 +16,6 @@ const createProductController = async (req: Request, res: Response) => {
     } catch (err: any) {
         console.error('Error in createProductController:', err);
         return res.status(500).send(`Internal Server Error: ${err.message}`);
-        
     }
 }
 
@@ -37,8 +36,8 @@ const updateProductController = async (req: Request, res: Response) => {
     try {
         const {productId} = req.params
         const parsedProductId = parseInt(productId, 10);
-        const {productName, categoryId, price, stock, description, statusId, image} = req.body
-        const result = await productService.updateProductService(productName, categoryId, price, stock, description, statusId, image, parsedProductId)
+        const {productName, categoryId, price, stock, description, statusId} = req.body
+        const result = await productService.updateProductService(productName, categoryId, price, stock, description, statusId, req.file?.filename || '', parsedProductId)
         return res.status(200).json({
             message: "success",
             data: result
@@ -46,7 +45,6 @@ const updateProductController = async (req: Request, res: Response) => {
     } catch (err: any) {
         console.error('Error in updateProductController:', err);
         return res.status(500).send(`Internal Server Error: ${err.message}`);
-        
     }
 }
 
