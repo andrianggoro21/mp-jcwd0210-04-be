@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime/library';
 import  productQueries = require('../queries/productQuery');
 
 const createProductService =async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string) => {
@@ -9,9 +10,9 @@ const createProductService =async (productName: string, categoryId: number, pric
     }
 }
 
-const getProductAllService =async () => {
+const getProductAllService =async (page: number, pageSize: number) => {
     try {
-        const res = await productQueries.getProductAllQuery()
+        const res = await productQueries.getProductAllQuery(page, pageSize)
         return res;
     } catch (err) {
         throw err;
@@ -29,12 +30,50 @@ const updateProductService =async (productName: string, categoryId: number, pric
     }
 }
 
-const filterProductService = async (productName: string, categoryId: number) => {
+const searchProductService = async (productName: string, categoryId: number) => {
     try {
-        const existingProduct = await productQueries.findProductQueryCategory(productName, categoryId)
+        const existingProduct = await productQueries.findProductQueryNameCategory(productName, categoryId)
         if (!existingProduct) throw new Error("data doesnt exist");
-        const res = await productQueries.filterProductQuery(productName, categoryId)
+        const res = await productQueries.searchProductQuery(productName, categoryId)
         return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const filterProductAlphabetService =async (parsedFilterId: number) => {
+    try {
+        const res = await productQueries.filterProductQuery()
+        interface Product {
+            productName: string;
+        }
+        let sortedRes: Product[] = [];
+        if (parsedFilterId === 0) {
+            sortedRes = [...res].sort((a, b) => a.productName.localeCompare(b.productName));
+        } else if ( parsedFilterId === 1) {
+            sortedRes = [...res].sort((a, b) => b.productName.localeCompare(a.productName));
+        }
+        return sortedRes
+    } catch (err) {
+        throw err
+    }
+}
+
+const filterProductPriceService =async (parsedFilterId: number) => {
+    try {
+        const res = await productQueries.filterProductQuery()
+        interface Product {
+            price: Decimal;
+        }
+        let sortedRes: Product[] = [];
+        
+        
+        if (parsedFilterId === 0) {
+            sortedRes = [...res].sort((a, b) => a.price.toNumber() - b.price.toNumber());
+        } else if (parsedFilterId === 1) {
+            sortedRes = [...res].sort((a, b) => b.price.toNumber() - a.price.toNumber());
+        }
+        return sortedRes
     } catch (err) {
         throw err
     }
@@ -44,5 +83,7 @@ export = {
     createProductService,
     getProductAllService,
     updateProductService,
-    filterProductService
+    searchProductService,
+    filterProductAlphabetService,
+    filterProductPriceService
 }

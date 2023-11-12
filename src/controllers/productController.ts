@@ -21,7 +21,8 @@ const createProductController = async (req: Request, res: Response) => {
 
 const getProductAllController = async (req: Request, res: Response) => {
     try {
-        const result = await productService.getProductAllService()
+        const {page, pageSize} = req.body
+        const result = await productService.getProductAllService(page, pageSize)
         return res.status(200).json({
             message: "success",
             data: result
@@ -48,17 +49,48 @@ const updateProductController = async (req: Request, res: Response) => {
     }
 }
 
-const filterProductController = async (req: Request, res: Response) => {
+const searchProductController = async (req: Request, res: Response) => {
     try {
         const {productName, categoryId} = req.query
         const parsedCategoryId = parseInt(categoryId as string, 10);
-        const result = await productService.filterProductService(productName as string, parsedCategoryId)
+        const result = await productService.searchProductService(productName as string, parsedCategoryId)
         return res.status(200).json({
             message: "success",
             data: result
         })
-    } catch (err) {
-        throw err
+    } catch (err: any) {
+        console.error('Error in searchProductController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
+const filterProductAlphabetController = async (req: Request, res: Response) => {
+    try {
+        const {filterId} = req.query
+        const parsedFilterId = parseInt(filterId as string, 10);
+        const result = await productService.filterProductAlphabetService(parsedFilterId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in filterProductAlphabetController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
+const filterProductPriceController = async (req: Request, res: Response) => {
+    try {
+        const {filterId} = req.query
+        const parsedFilterId = parseInt(filterId as string, 10);
+        const result = await productService.filterProductPriceService(parsedFilterId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in filterProductAlphabetController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
     }
 }
 
@@ -66,5 +98,7 @@ export = {
     createProductController,
     getProductAllController,
     updateProductController,
-    filterProductController
+    searchProductController,
+    filterProductAlphabetController,
+    filterProductPriceController
 }

@@ -21,9 +21,14 @@ const createProductQuery = async (productName: string, categoryId: number, price
     } 
 };
 
-const getProductAllQuery = async () => {
+const getProductAllQuery = async (page: number, pageSize: number) => {
     try {
-        const res = await prisma.products.findMany()
+        const skip = (page - 1) * pageSize;
+        const take = pageSize
+        const res = await prisma.products.findMany({
+            skip,
+            take,
+        })
         return res
     } catch (err) {
         throw err
@@ -66,7 +71,7 @@ const updateProductQuery =async (productName: string, categoryId: number, price:
 }
 
 
-const findProductQueryCategory = async (productName: string, categoryId:number)  => {
+const findProductQueryNameCategory = async (productName: string, categoryId:number)  => {
     try {
         interface ProductFilter {
             productName?: { contains: string };
@@ -88,7 +93,7 @@ const findProductQueryCategory = async (productName: string, categoryId:number) 
     }
 }
 
-const filterProductQuery = async (productName: string, categoryId: number) => {
+const searchProductQuery = async (productName: string, categoryId: number) => {
     try {
         interface ProductFilter {
             productName?: { contains: string };
@@ -104,8 +109,6 @@ const filterProductQuery = async (productName: string, categoryId: number) => {
       
         const res = await prisma.products.findMany({
             where: filter
-                
-
         })
         return res
     } catch (err) {
@@ -113,39 +116,22 @@ const filterProductQuery = async (productName: string, categoryId: number) => {
     }
 }
 
-// const findProductQueryName = async (productName:string)  => {
-//     try {
-//         const res = await prisma.products.findFirst({
-//             where: {
-//                 productName: productName,
-//               },
-//         })
-//         return res
-//     } catch (err) {
-//         throw err
-//     }
-// }
-
-// const filterProductQueryName = async (productName: number) => {
-//     try {
-//         const res = await prisma.products.findMany({
-//             where: {
-//                 categoryId
-//             }
-//         })
-//         return res
-//     } catch (err) {
-//         throw err
-//     }
-// }
-
+const filterProductQuery = async () => {
+    try {
+        const res = await prisma.products.findMany()
+        return res
+    } catch (err) {
+        throw err
+    }
+}
 
 export = {
     createProductQuery,
     getProductAllQuery,
     findProductQuery,
     updateProductQuery,
-    findProductQueryCategory,
+    findProductQueryNameCategory,
+    searchProductQuery,
     filterProductQuery,
-    // findProductQueryName
+
 }
