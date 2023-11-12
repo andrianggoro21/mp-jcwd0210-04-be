@@ -44,7 +44,7 @@ const updateProductController = async (req: Request, res: Response) => {
             data: result
         })
     } catch (err: any) {
-        console.error('Error in createProductController:', err);
+        console.error('Error in updateProductController:', err);
         return res.status(500).send(`Internal Server Error: ${err.message}`);
         
     }

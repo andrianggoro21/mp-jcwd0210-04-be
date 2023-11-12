@@ -11,7 +11,9 @@ const app = express();
 app.use(express.json());
 
 import routerProduct = require("./routes/productRouter");
-app.use("/product", routerProduct)
+app.use("/product", routerProduct);
+import routerCategory = require("./routes/categoryRouter");
+app.use("/category", routerCategory)
 
 app.listen(port, () => {
     console.log(`server started on port ${port}`);
