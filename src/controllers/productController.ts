@@ -48,8 +48,23 @@ const updateProductController = async (req: Request, res: Response) => {
     }
 }
 
+const filterProductController = async (req: Request, res: Response) => {
+    try {
+        const {productName, categoryId} = req.query
+        const parsedCategoryId = parseInt(categoryId as string, 10);
+        const result = await productService.filterProductService(productName as string, parsedCategoryId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     createProductController,
     getProductAllController,
-    updateProductController
+    updateProductController,
+    filterProductController
 }

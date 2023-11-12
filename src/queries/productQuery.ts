@@ -66,10 +66,86 @@ const updateProductQuery =async (productName: string, categoryId: number, price:
 }
 
 
+const findProductQueryCategory = async (productName: string, categoryId:number)  => {
+    try {
+        interface ProductFilter {
+            productName?: { contains: string };
+            categoryId?: number;
+        }
+        const filter : ProductFilter = {};
+        if (productName) {
+            filter.productName = {contains: productName}
+        }
+        if (categoryId) {
+            filter.categoryId = categoryId
+        }
+        const res = await prisma.products.findFirst({
+            where: filter
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const filterProductQuery = async (productName: string, categoryId: number) => {
+    try {
+        interface ProductFilter {
+            productName?: { contains: string };
+            categoryId?: number;
+        }
+        const filter : ProductFilter = {};
+        if (productName) {
+            filter.productName = {contains: productName}
+        }
+        if (categoryId) {
+            filter.categoryId = categoryId
+        }
+      
+        const res = await prisma.products.findMany({
+            where: filter
+                
+
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+// const findProductQueryName = async (productName:string)  => {
+//     try {
+//         const res = await prisma.products.findFirst({
+//             where: {
+//                 productName: productName,
+//               },
+//         })
+//         return res
+//     } catch (err) {
+//         throw err
+//     }
+// }
+
+// const filterProductQueryName = async (productName: number) => {
+//     try {
+//         const res = await prisma.products.findMany({
+//             where: {
+//                 categoryId
+//             }
+//         })
+//         return res
+//     } catch (err) {
+//         throw err
+//     }
+// }
+
 
 export = {
     createProductQuery,
     getProductAllQuery,
     findProductQuery,
-    updateProductQuery
+    updateProductQuery,
+    findProductQueryCategory,
+    filterProductQuery,
+    // findProductQueryName
 }

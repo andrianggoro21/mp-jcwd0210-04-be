@@ -29,8 +29,20 @@ const updateProductService =async (productName: string, categoryId: number, pric
     }
 }
 
+const filterProductService = async (productName: string, categoryId: number) => {
+    try {
+        const existingProduct = await productQueries.findProductQueryCategory(productName, categoryId)
+        if (!existingProduct) throw new Error("data doesnt exist");
+        const res = await productQueries.filterProductQuery(productName, categoryId)
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     createProductService,
     getProductAllService,
-    updateProductService
+    updateProductService,
+    filterProductService
 }
