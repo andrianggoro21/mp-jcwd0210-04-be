@@ -56,7 +56,7 @@ model Products {
   transaction_details Transaction_Details[]
 }
 
-model Transactions {
+model Transactions {1 
   id              Int       @id @default(autoincrement())
   date            DateTime  @default(now())
   totalQuantity   Int   
@@ -82,4 +82,9 @@ model Payment_Method {
   id            Int       @id @default(autoincrement())
   paymentName   String
   transaction   Transactions[]  
+}
+
+model Update_Profile {
+  id            Int       @id @default(autoincrement())
+  image         String    @db.VarChar(1000)
 }
