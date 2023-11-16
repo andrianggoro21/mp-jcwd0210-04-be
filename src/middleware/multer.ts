@@ -24,6 +24,15 @@ const productStorage = multer.diskStorage({
     },
 });
 
+const update_profile = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, path.join(__dirname, "../public/images/update_profile"));
+  },
+  filename: (req, file, cb) => {
+    cb(null, `update_profile_${Date.now()}-${file.originalname}`);
+  },
+});
+
   const fileFilter = (req: Request, file: Express.Multer.File, cb: any) => {
     const fileType = file.mimetype.split('/')[1];
     if (
@@ -48,6 +57,13 @@ const productStorage = multer.diskStorage({
     limits,
   }).single('image');
 
+  const UploadUpdate_ProfileFile = multer({
+    storage: update_profile,
+    fileFilter,
+    limits,
+  }).single("image");
+
   export = {
     uploadProductFile,
+    UploadUpdate_ProfileFile,
   }
