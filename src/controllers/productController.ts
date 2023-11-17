@@ -23,8 +23,6 @@ const createProductController = async (req: Request, res: Response) => {
 const getProductAllController =async (req: Request, res: Response) => {
     try {
         const result = await productService.getProductAllService()
-<<<<<<< Updated upstream
-=======
         return res.status(200).json({
             message: "success",
             data: result
@@ -39,7 +37,6 @@ const getProductIdController =async (req: Request, res: Response) => {
     try {
         const {productId} = req.params
         console.log(productId);
-        
         const parsedProductId = parseInt(productId, 10);
         const result = await productService.getProductIdService(parsedProductId)
         return res.status(200).json({
@@ -61,7 +58,6 @@ const getProductPaginationController = async (req: Request, res: Response) => {
         const parsedAlphaId = parseInt(alphaId as string, 10);
         const parsedPriceId = parseInt(priceId as string, 10);
         const result = await productService.getProductPaginationService(parsedPage, parsedPageSize, productName as string, parsedCategoryId, parsedAlphaId, parsedPriceId)
->>>>>>> Stashed changes
         return res.status(200).json({
             message: "success",
             data: result
@@ -77,10 +73,6 @@ const updateProductController = async (req: Request, res: Response) => {
         const {productId} = req.params
         console.log("paramsId", productId);
         const parsedProductId = parseInt(productId, 10);
-<<<<<<< Updated upstream
-        const {productName, categoryId, price, stock, description, statusId} = req.body
-        const result = await productService.updateProductService(productName, categoryId, price, stock, description, statusId, req.file?.filename || '', parsedProductId)
-=======
         const {productName, categoryId, price, stock, description, statusId, image} = req.body
         const strProductName = productName ? String(productName) : undefined;
         const numCategoryId = categoryId ? Number(categoryId) : undefined;
@@ -92,7 +84,6 @@ const updateProductController = async (req: Request, res: Response) => {
         
         
         const result = await productService.updateProductService(parsedProductId, strProductName, numCategoryId, numPrice, numStock, strDescription, numStatusId, req.file?.filename || image)
->>>>>>> Stashed changes
         return res.status(200).json({
             message: "success",
             data: result
@@ -106,14 +97,8 @@ const updateProductController = async (req: Request, res: Response) => {
 export = {
     createProductController,
     getProductAllController,
-<<<<<<< Updated upstream
-    updateProductController
-=======
     getProductIdController,
     getProductPaginationController,
     updateProductController,
-    searchProductController,
-    filterProductAlphabetController,
-    filterProductPriceController
->>>>>>> Stashed changes
+    
 }

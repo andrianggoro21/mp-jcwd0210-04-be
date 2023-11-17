@@ -22,10 +22,6 @@ const createProductQuery = async (productName: string, categoryId: number, price
 };
 
 const getProductAllQuery = async () => {
-<<<<<<< Updated upstream
-    try {
-        const res = await prisma.products.findMany()
-=======
     try {
         const res = await prisma.products.findMany({
             include: {
@@ -76,7 +72,6 @@ const getProductPaginationQuery = async (page: number, pageSize: number, product
             take,
             where: filter
         })
->>>>>>> Stashed changes
         return res
     } catch (err) {
         throw err

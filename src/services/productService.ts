@@ -12,9 +12,6 @@ const createProductService =async (productName: string, categoryId: number, pric
 const getProductAllService =async () => {
     try {
         const res = await productQueries.getProductAllQuery()
-<<<<<<< Updated upstream
-        return res;
-=======
         return res
     } catch (err) {
         throw err
@@ -36,7 +33,7 @@ const getProductPaginationService =async (page: number, pageSize: number, produc
 
         interface Product {
             productName: string;
-            price: Decimal;
+            price: any;
         }
         let sortedRes: Product[] = [...res];
         if (alphaId === 0) {
@@ -49,7 +46,6 @@ const getProductPaginationService =async (page: number, pageSize: number, produc
             sortedRes.sort((a, b) => b.price.toNumber() - a.price.toNumber());
         }
         return sortedRes;
->>>>>>> Stashed changes
     } catch (err) {
         throw err;
     }
@@ -69,14 +65,7 @@ const updateProductService =async (productId: number, productName: string  | und
 export = {
     createProductService,
     getProductAllService,
-<<<<<<< Updated upstream
-    updateProductService
-=======
     getProductIdService,
     getProductPaginationService,
     updateProductService,
-    searchProductService,
-    filterProductAlphabetService,
-    filterProductPriceService
->>>>>>> Stashed changes
 }
