@@ -145,9 +145,9 @@ export = {
     updateProductController,
     searchProductController,
     filterProductAlphabetController,
-    filterProductPriceController
+    filterProductPriceController,
     getProductIdController,
     getProductPaginationController,
-    updateProductController,
+
     
 }

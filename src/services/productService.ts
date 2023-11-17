@@ -120,6 +120,5 @@ export = {
     filterProductAlphabetService,
     filterProductPriceService,
     getProductIdService,
-    getProductPaginationService,
-    updateProductService,
+    getProductPaginationService
 }
