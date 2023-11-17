@@ -82,7 +82,6 @@ const updateProductController = async (req: Request, res: Response) => {
         const numStatusId = statusId ? Number(statusId) : undefined;
         console.log("productId", parsedProductId);
         
-        
         const result = await productService.updateProductService(parsedProductId, strProductName, numCategoryId, numPrice, numStock, strDescription, numStatusId, req.file?.filename || image)
         return res.status(200).json({
             message: "success",

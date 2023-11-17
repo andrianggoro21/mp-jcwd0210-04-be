@@ -14,15 +14,12 @@ import routerProduct = require("./routes/productRouter");
 app.use("/product", routerProduct);
 import routerCategory = require("./routes/categoryRouter");
 app.use("/category", routerCategory)
-<<<<<<< Updated upstream
-=======
-import routerReport = require("./routes/reportRouter");
-app.use("/report", routerReport)
+// import routerReport = require("./routes/reportRouter");
+// app.use("/report", routerReport)
 import routerStatus = require("./routes/statusRouter");
 app.use("/status", routerStatus)
 
 app.use("/uploads", express.static(path.join(__dirname, "./public/images")));
->>>>>>> Stashed changes
 
 app.listen(port, () => {
     console.log(`server started on port ${port}`);
