@@ -18,8 +18,6 @@ const getProductAllService =async () => {
     }
 }
 
-
-
 const updateProductService =async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string, productId: number)  => {
     try {
         const existingProduct  = await productQueries.findProductQuery(productId)
