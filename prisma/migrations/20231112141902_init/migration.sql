@@ -24,6 +24,7 @@ CREATE TABLE `Users` (
 CREATE TABLE `Categories` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `categoryName` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(1000) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -55,6 +56,7 @@ CREATE TABLE `Products` (
 -- CreateTable
 CREATE TABLE `Transactions` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `totalQuantity` INTEGER NOT NULL,
     `totalPrice` DECIMAL(10, 0) NOT NULL,
@@ -92,6 +94,9 @@ ALTER TABLE `Products` ADD CONSTRAINT `Products_categoryId_fkey` FOREIGN KEY (`c
 
 -- AddForeignKey
 ALTER TABLE `Products` ADD CONSTRAINT `Products_statusId_fkey` FOREIGN KEY (`statusId`) REFERENCES `Status`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transactions` ADD CONSTRAINT `Transactions_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transactions` ADD CONSTRAINT `Transactions_payment_methodId_fkey` FOREIGN KEY (`payment_methodId`) REFERENCES `Payment_Method`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

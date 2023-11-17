@@ -6,6 +6,9 @@ import multer = require("../middleware/multer");
 
 router.post("/", multer.uploadProductFile, productController.createProductController)
 router.get("/", productController.getProductAllController)
-router.patch("/update/:productId", productController.updateProductController)
+router.patch("/update/:productId", multer.uploadProductFile, productController.updateProductController)
+router.get("/search/", productController.searchProductController)
+router.get("/filter/", productController.filterProductAlphabetController)
+router.get("/filter/price", productController.filterProductPriceController)
 
 export = router;
