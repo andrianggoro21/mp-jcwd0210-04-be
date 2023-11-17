@@ -22,8 +22,61 @@ const createProductQuery = async (productName: string, categoryId: number, price
 };
 
 const getProductAllQuery = async () => {
+<<<<<<< Updated upstream
     try {
         const res = await prisma.products.findMany()
+=======
+    try {
+        const res = await prisma.products.findMany({
+            include: {
+                category: true
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const getProductIdQuery = async (productId: number) => {
+    try {
+        const res = await prisma.products.findUnique({
+            where: {
+                id: productId
+            },
+            include: {
+                category: true,
+                status: true
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const getProductPaginationQuery = async (page: number, pageSize: number, productName: string, categoryId: number, alphaId: number, priceId: number) => {
+    try {
+        const skip = (page - 1) * pageSize;
+        const take = pageSize
+
+        interface ProductFilter {
+            productName?: { contains: string };
+            categoryId?: number;
+        }
+        const filter : ProductFilter = {};
+        if (productName) {
+            filter.productName = {contains: productName}
+        }
+        if (categoryId) {
+            filter.categoryId = categoryId
+        }
+        const res = await prisma.products.findMany({
+            skip,
+            take,
+            where: filter
+        })
+>>>>>>> Stashed changes
         return res
     } catch (err) {
         throw err
@@ -43,21 +96,29 @@ const findProductQuery = async (productId:number)  => {
     }
 }
 
-const updateProductQuery =async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string, productId: number) => {
+const updateProductQuery =async (productId: number, productName: string | undefined,
+    categoryId: number | undefined,
+    price: number | undefined,
+    stock: number | undefined,
+    description: string | undefined,
+    statusId: number | undefined,
+    image: string | undefined,) => {
+        
     try {
+        const data: Record<string, any> = {};
+            if (productName !== undefined) data.productName = productName;
+            if (categoryId !== undefined && !isNaN(categoryId)) data.categoryId = categoryId;
+            if (price !== undefined && !isNaN(price)) data.price = price;
+            if (stock !== undefined && !isNaN(stock)) data.stock = stock;
+            if (description !== undefined) data.description = description;
+            if (statusId !== undefined && !isNaN(statusId)) data.statusId = statusId;
+            if (image !== undefined) data.image = image;
+        
         const res = await prisma.products.updateMany({
             where: {
                 id: productId
             },
-            data: {
-                productName: productName,
-                categoryId: categoryId,
-                price:  price,
-                stock:  stock,
-                description: description,
-                statusId: statusId,
-                image:  image,
-            },
+            data: data
         });
         return res;
     } catch (err) {
@@ -70,6 +131,8 @@ const updateProductQuery =async (productName: string, categoryId: number, price:
 export = {
     createProductQuery,
     getProductAllQuery,
+    getProductIdQuery,
+    getProductPaginationQuery,
     findProductQuery,
     updateProductQuery
 }

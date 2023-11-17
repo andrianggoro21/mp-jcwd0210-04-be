@@ -32,8 +32,9 @@ const updateCategoryController = async (req: Request, res: Response) => {
     try {
         const {categoryId} = req.params
         const parsedCategoryId = parseInt(categoryId, 10);
-        const {categoryName} = req.body
-        const result = await categoryService.updateCategoryService(categoryName,  req.file?.filename || '', parsedCategoryId)
+        const {categoryName, image} = req.body
+        const strCategoryName = categoryName ? String(categoryName) : undefined;
+        const result = await categoryService.updateCategoryService(parsedCategoryId, strCategoryName,  req.file?.filename || image )
         return res.status(200).json({
             message: "success",
             data: result

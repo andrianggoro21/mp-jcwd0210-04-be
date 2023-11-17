@@ -18,11 +18,11 @@ const getCategoryAllService = async () => {
     }
 }
 
-const updateCategoryService =async (categoryName: string, image: string, categoryId: number)  => {
+const updateCategoryService =async (categoryId: number, categoryName: string | undefined , image: string, )  => {
     try {
         const existingCategory = await categoryQuery.findCategoryQuery(categoryId)
         if (!existingCategory) throw new Error("data doesnt exist");
-        const res = await categoryQuery.updateCategoryQuery(categoryName, image, categoryId)
+        const res = await categoryQuery.updateCategoryQuery(categoryId, categoryName, image)
         return res
     } catch (err) {
         throw err
