@@ -121,22 +121,15 @@ const updateProductQuery =async (productId: number, productName: string | undefi
     }
 }
 
-
-const findProductQueryNameCategory = async (productName: string, categoryId:number)  => {
+const updateProductStatusQuery = async (productId: number, statusId: number | undefined) => {
     try {
-        interface ProductFilter {
-            productName?: { contains: string };
-            categoryId?: number;
-        }
-        const filter : ProductFilter = {};
-        if (productName) {
-            filter.productName = {contains: productName}
-        }
-        if (categoryId) {
-            filter.categoryId = categoryId
-        }
-        const res = await prisma.products.findFirst({
-            where: filter
+        const data: Record<string, any> = {};
+        if (statusId !== undefined && !isNaN(statusId)) data.statusId = statusId;
+        const res = await prisma.products.update({
+            where: {
+                id: productId
+            },
+            data: data
         })
         return res
     } catch (err) {
@@ -144,37 +137,61 @@ const findProductQueryNameCategory = async (productName: string, categoryId:numb
     }
 }
 
-const searchProductQuery = async (productName: string, categoryId: number) => {
-    try {
-        interface ProductFilter {
-            productName?: { contains: string };
-            categoryId?: number;
-        }
-        const filter : ProductFilter = {};
-        if (productName) {
-            filter.productName = {contains: productName}
-        }
-        if (categoryId) {
-            filter.categoryId = categoryId
-        }
+
+
+// const findProductQueryNameCategory = async (productName: string, categoryId:number)  => {
+//     try {
+//         interface ProductFilter {
+//             productName?: { contains: string };
+//             categoryId?: number;
+//         }
+//         const filter : ProductFilter = {};
+//         if (productName) {
+//             filter.productName = {contains: productName}
+//         }
+//         if (categoryId) {
+//             filter.categoryId = categoryId
+//         }
+//         const res = await prisma.products.findFirst({
+//             where: filter
+//         })
+//         return res
+//     } catch (err) {
+//         throw err
+//     }
+// }
+
+// const searchProductQuery = async (productName: string, categoryId: number) => {
+//     try {
+//         interface ProductFilter {
+//             productName?: { contains: string };
+//             categoryId?: number;
+//         }
+//         const filter : ProductFilter = {};
+//         if (productName) {
+//             filter.productName = {contains: productName}
+//         }
+//         if (categoryId) {
+//             filter.categoryId = categoryId
+//         }
       
-        const res = await prisma.products.findMany({
-            where: filter
-        })
-        return res
-    } catch (err) {
-        throw err
-    }
-}
+//         const res = await prisma.products.findMany({
+//             where: filter
+//         })
+//         return res
+//     } catch (err) {
+//         throw err
+//     }
+// }
 
-const filterProductQuery = async () => {
-    try {
-        const res = await prisma.products.findMany()
-        return res
-    } catch (err) {
-        throw err
-    }
-}
+// const filterProductQuery = async () => {
+//     try {
+//         const res = await prisma.products.findMany()
+//         return res
+//     } catch (err) {
+//         throw err
+//     }
+// }
 
 export = {
     createProductQuery,
@@ -183,7 +200,8 @@ export = {
     getProductPaginationQuery,
     findProductQuery,
     updateProductQuery,
-    findProductQueryNameCategory,
-    searchProductQuery,
-    filterProductQuery,
+    updateProductStatusQuery
+    // findProductQueryNameCategory,
+    // searchProductQuery,
+    // filterProductQuery,
 }
