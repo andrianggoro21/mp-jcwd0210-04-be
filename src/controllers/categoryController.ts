@@ -45,8 +45,24 @@ const updateCategoryController = async (req: Request, res: Response) => {
     }
 }
 
+const deleteCategoryController =async (req: Request, res: Response) => {
+    try {
+        const {categoryId} = req.params
+        const parsedCategoryId = parseInt(categoryId, 10);
+        const result = await categoryService.deleteCategoryService(parsedCategoryId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in updateControllerController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
 export = {
     createCategoryController,
     getCategoryAllController,
-    updateCategoryController
+    updateCategoryController,
+    deleteCategoryController,
 }

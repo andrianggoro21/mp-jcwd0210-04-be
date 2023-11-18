@@ -76,6 +76,17 @@ const updateProductStatusService =async (productId: number, statusId: number | u
     }
 }
 
+const deleteProductService =async (productId: number) => {
+    try {
+        const existingProduct  = await productQueries.findProductQuery(productId)
+        if (!existingProduct) throw new Error("data doesnt exist");
+        const res = await productQueries.deleteProductQuery(productId)
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 // const searchProductService = async (productName: string, categoryId: number) => {
 //     try {
 //         const existingProduct = await productQueries.findProductQueryNameCategory(productName, categoryId)
@@ -132,6 +143,7 @@ export = {
     getProductIdService,
     getProductPaginationService,
     updateProductStatusService,
+    deleteProductService,
     // searchProductService,
     // filterProductAlphabetService,
     // filterProductPriceService,

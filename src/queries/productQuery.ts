@@ -91,6 +91,19 @@ const findProductQuery = async (productId:number)  => {
     }
 }
 
+const findProductCategoryQuery = async (categoryId:number)  => {
+    try {
+        const res = await prisma.products.findFirst({
+            where: {
+                categoryId: categoryId,
+              },
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 const updateProductQuery =async (productId: number, productName: string | undefined,
     categoryId: number | undefined,
     price: number | undefined,
@@ -137,6 +150,18 @@ const updateProductStatusQuery = async (productId: number, statusId: number | un
     }
 }
 
+const deleteProductQuery = async (productId: number) => {
+    try {
+        const res = await prisma.products.delete({
+            where: {
+                id: productId
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
 
 
 // const findProductQueryNameCategory = async (productName: string, categoryId:number)  => {
@@ -199,8 +224,10 @@ export = {
     getProductIdQuery,
     getProductPaginationQuery,
     findProductQuery,
+    findProductCategoryQuery,
     updateProductQuery,
-    updateProductStatusQuery
+    updateProductStatusQuery,
+    deleteProductQuery,
     // findProductQueryNameCategory,
     // searchProductQuery,
     // filterProductQuery,

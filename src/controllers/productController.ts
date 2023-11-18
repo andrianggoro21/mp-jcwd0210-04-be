@@ -109,6 +109,21 @@ const updateProductStatusController = async (req: Request, res: Response) => {
     }
 }
 
+const deleteProductService =async (req: Request, res: Response) => {
+    try {
+        const {productId} = req.params
+        const parsedProductId = parseInt(productId, 10);
+        const result = await productService.deleteProductService(parsedProductId);
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in updateProductController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
 
 // const searchProductController = async (req: Request, res: Response) => {
 //     try {
@@ -162,6 +177,7 @@ export = {
     getProductIdController,
     getProductPaginationController,
     updateProductStatusController,
+    deleteProductService,
     // searchProductController,
     // filterProductAlphabetController,
     // filterProductPriceController,

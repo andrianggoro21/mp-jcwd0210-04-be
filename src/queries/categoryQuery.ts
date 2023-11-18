@@ -57,9 +57,23 @@ const updateCategoryQuery = async (categoryId: number, categoryName: string | un
     }
 }
 
+const deleteCategoryQuery = async (categoryId: number) => {
+    try {
+        const res = await prisma.categories.delete({
+            where: {
+                id: categoryId
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     createCategoryQuery,
     getCategoryAllQuery,
     findCategoryQuery,
-    updateCategoryQuery
+    updateCategoryQuery,
+    deleteCategoryQuery,
 }

@@ -1,4 +1,5 @@
 import categoryQuery from "../queries/categoryQuery";
+import productQuery from "../queries/productQuery";
 
 const createCategoryService = async (categoryName: string, image: string) => {
     try {
@@ -29,8 +30,22 @@ const updateCategoryService =async (categoryId: number, categoryName: string | u
     }
 }
 
+const deleteCategoryService = async (categoryId: number) => {
+    try {
+        const existingCategory = await categoryQuery.findCategoryQuery(categoryId)
+        if (!existingCategory) throw new Error("data doesnt exist");
+        const existingProductCategory = await productQuery.findProductCategoryQuery(categoryId)
+        if (existingProductCategory) throw new Error("Used categories");
+        const res = await categoryQuery.deleteCategoryQuery(categoryId)
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     createCategoryService,
     getCategoryAllService,
-    updateCategoryService
+    updateCategoryService,
+    deleteCategoryService,
 }
