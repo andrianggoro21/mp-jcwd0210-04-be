@@ -41,7 +41,9 @@ const getProductPaginationService =async (page: number, pageSize: number, produc
             sortedRes.sort((a, b) => a.productName.localeCompare(b.productName));
         } else if ( alphaId === 1) {
             sortedRes.sort((a, b) => b.productName.localeCompare(a.productName));
-        } else  if (priceId === 0) {
+        }  
+        
+        if (priceId === 0) {
             sortedRes.sort((a, b) => a.price.toNumber() - b.price.toNumber());
         } else if (priceId === 1) {
             sortedRes.sort((a, b) => b.price.toNumber() - a.price.toNumber());
