@@ -53,7 +53,24 @@ const getTransactionAllQuery =async (startDate?: string, endDate?: string) => {
     }
 }
 
+const getTransactionDetailQuery =async (transactionId:number) => {
+    try {
+        const res = await prisma.transaction_Details.findMany({
+            where: {
+                transactionId: transactionId
+            },
+            include: {
+                product: true
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = { 
     getTransactionGraphQuery,
-    getTransactionAllQuery
+    getTransactionAllQuery,
+    getTransactionDetailQuery
 }

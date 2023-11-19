@@ -28,7 +28,23 @@ const getTransactionAllController = async (req: Request, res: Response) => {
     } 
 }
 
+const getTransactionDetailController = async (req: Request, res: Response) => {
+    try {
+        const {transactionId} = req.params
+        const parsedTransactionId = parseInt(transactionId, 10);
+        const result = await reportService.getTransactionDetailService(parsedTransactionId)
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in getTransactionAllController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
 export = {
     getTransactionGraphController,
-    getTransactionAllController
+    getTransactionAllController,
+    getTransactionDetailController
 }

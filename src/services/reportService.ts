@@ -18,7 +18,17 @@ const getTransactionAllService =async (startDate: string, endDate: string) => {
     }
 }
 
+const getTransactionDetailService =async (transactionId:number) => {
+    try {
+        const res = await reportQuery.getTransactionDetailQuery(transactionId)
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     getTransactionGraphService,
-    getTransactionAllService
+    getTransactionAllService,
+    getTransactionDetailService
 }

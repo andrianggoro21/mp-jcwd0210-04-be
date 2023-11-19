@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.get("/", reportController.getTransactionGraphController)
 router.get("/all", reportController.getTransactionAllController)
+router.get("/detail/:transactionId", reportController.getTransactionDetailController)
 
 export = router;
