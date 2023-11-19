@@ -9,6 +9,16 @@ const getTransactionGraphService = async () => {
     }
 }
 
+const getTransactionAllService =async (startDate: string, endDate: string) => {
+    try {
+        const res = await reportQuery.getTransactionAllQuery(startDate, endDate)
+        return res
+    } catch (err) {
+       throw err 
+    }
+}
+
 export = {
-    getTransactionGraphService
+    getTransactionGraphService,
+    getTransactionAllService
 }

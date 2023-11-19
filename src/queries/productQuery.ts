@@ -25,7 +25,9 @@ const getProductAllQuery = async (page: number, pageSize: number) => {
     try {
         const res = await prisma.products.findMany({
             include: {
-                category: true
+                category: true,
+                
+                
             }
         })
         return res
