@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
 import dotenv from "dotenv";
 import cors from 'cors'
 dotenv.config({
@@ -10,6 +11,14 @@ const port: number = Number(process.env.PORT) || 8000;
 const app = express();
 
 app.use(express.json());
+app.use(
+    cors({
+      origin: process.env.WHITELISTED_DOMAIN
+        ? process.env.WHITELISTED_DOMAIN.split(" ")
+        : undefined,
+    })
+  );
+
 
 app.use(
   cors({
@@ -30,6 +39,16 @@ app.use("/transaction_details", routerTransaction_details);
 
 import routerUpdate_Profile = require("./routes/update_profileRouter");
 app.use("/update_profile", routerUpdate_Profile);
+import routerCategory = require("./routes/categoryRouter");
+app.use("/category", routerCategory)
+import routerReport = require("./routes/reportRouter");
+app.use("/report", routerReport)
+// import routerReport = require("./routes/reportRouter");
+// app.use("/report", routerReport)
+import routerStatus = require("./routes/statusRouter");
+app.use("/status", routerStatus)
+
+app.use("/uploads", express.static(path.join(__dirname, "./public/images")));
 
 app.listen(port, () => {
   console.log(`server started on port ${port}`);

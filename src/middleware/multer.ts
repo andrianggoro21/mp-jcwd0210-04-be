@@ -2,24 +2,11 @@ import path from 'path';
 import multer from "multer";
 import { Request, Response } from 'express';
 
-// const productStorage = multer.diskStorage({
-//     destination: (req: Request, res: Response, cb: any) => {
-//       cb(null, path.join(__dirname, '../public/images/product'));
-//     },
-//     filename: (req: Request, file: Express.Multer.File, cb: any) => {
-//       // const { username } = req.user;
-//       // cb(null, `event_${username}-${Date.now()}-${file.originalname}`);
-//       cb(null, `event_user-${Date.now()}-${file.originalname}`);
-//     },
-//   });
-
 const productStorage = multer.diskStorage({
     destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
       cb(null, path.join(__dirname, '../public/images/product'));
     },
     filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
-      // const { username } = req.user;
-      // cb(null, `event_${username}-${Date.now()}-${file.originalname}`);
       cb(null, `product_user-${Date.now()}-${file.originalname}`);
     },
 });
@@ -30,6 +17,12 @@ const update_profile = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, `update_profile_${Date.now()}-${file.originalname}`);
+const categoryStorage = multer.diskStorage({
+  destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
+    cb(null, path.join(__dirname, '../public/images/category'));
+  },
+  filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
+    cb(null, `category_product-${Date.now()}-${file.originalname}`);
   },
 });
 
@@ -66,4 +59,14 @@ const update_profile = multer.diskStorage({
   export = {
     uploadProductFile,
     UploadUpdate_ProfileFile,
+  const uploadCategoryFile = multer({
+    storage: categoryStorage,
+    fileFilter,
+    limits,
+  }).single('image');
+
+
+  export = {
+    uploadProductFile,
+    uploadCategoryFile
   }
