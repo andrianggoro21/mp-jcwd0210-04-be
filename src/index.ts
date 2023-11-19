@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
-import cors from 'cors'
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
 });
@@ -18,15 +17,6 @@ app.use(
         : undefined,
     })
   );
-
-
-app.use(
-  cors({
-    origin: process.env.WHITELISTED_DOMAIN
-    ? process.env.WHITELISTED_DOMAIN.split(" ")
-    : undefined,
-  })
-)
 
 import routerProduct = require("./routes/productRouter");
 app.use("/product", routerProduct);

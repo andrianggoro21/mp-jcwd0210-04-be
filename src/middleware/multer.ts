@@ -17,6 +17,8 @@ const update_profile = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, `update_profile_${Date.now()}-${file.originalname}`);
+}});
+
 const categoryStorage = multer.diskStorage({
   destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
     cb(null, path.join(__dirname, '../public/images/category'));
@@ -24,7 +26,7 @@ const categoryStorage = multer.diskStorage({
   filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
     cb(null, `category_product-${Date.now()}-${file.originalname}`);
   },
-});
+})
 
   const fileFilter = (req: Request, file: Express.Multer.File, cb: any) => {
     const fileType = file.mimetype.split('/')[1];
@@ -56,9 +58,7 @@ const categoryStorage = multer.diskStorage({
     limits,
   }).single("image");
 
-  export = {
-    uploadProductFile,
-    UploadUpdate_ProfileFile,
+  
   const uploadCategoryFile = multer({
     storage: categoryStorage,
     fileFilter,
@@ -68,5 +68,6 @@ const categoryStorage = multer.diskStorage({
 
   export = {
     uploadProductFile,
+    UploadUpdate_ProfileFile,
     uploadCategoryFile
   }

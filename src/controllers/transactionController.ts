@@ -7,6 +7,7 @@ const createTransactionController = async (
 ): Promise<any> => {
   try {
     const {
+      userId,
       date,
       totalQuantity,
       totalPrice,
@@ -14,12 +15,14 @@ const createTransactionController = async (
       paymentAmount,
       paymentChange,
     } = req.body;
+    const numUserId = Number(userId);
     const numTotalQuantity = Number(totalQuantity);
     const numTotalPrice = Number(totalPrice);
     const numPayment_methodId = Number(payment_methodId);
     const numPaymentAmount = Number(paymentAmount);
     const numPaymentChange = Number(paymentChange);
     const result = await transactionService.createTransactionService(
+      userId,
       date,
       numTotalQuantity,
       numTotalPrice,

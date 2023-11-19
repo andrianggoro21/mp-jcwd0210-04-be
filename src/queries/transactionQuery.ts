@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const createTransactionQuery = async (
+  userId: number,
   date: Date,
   totalQuantity: number,
   totalPrice: number,
@@ -13,6 +14,7 @@ const createTransactionQuery = async (
   try {
     const res = await prisma.transactions.create({
       data: {
+        userId: userId,
         date: date,
         totalQuantity: totalQuantity,
         totalPrice: totalPrice,

@@ -1,6 +1,7 @@
 import transactionQuery = require("../queries/transactionQuery");
 
 const createTransactionService = async (
+  userId: number,
   date: Date,
   totalQuantity: number,
   totalPrice: number,
@@ -10,6 +11,7 @@ const createTransactionService = async (
 ) => {
   try {
     const res = await transactionQuery.createTransactionQuery(
+      userId,
       date,
       totalQuantity,
       totalPrice,
