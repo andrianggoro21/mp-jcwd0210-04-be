@@ -16,6 +16,11 @@ model Roles {
   user          Users[]  
 }
 
+enum RoleName {
+  ADMIN
+  CASHIER
+}
+
 model Users {
   id            Int       @id @default(autoincrement())
   username      String   
