@@ -27,8 +27,18 @@ const getTransactionDetailService =async (transactionId:number) => {
     }
 }
 
+const getBestSellerTransactionService =async () => {
+    try {
+        const res = await reportQuery.getBestSellerTransaction()
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 export = {
     getTransactionGraphService,
     getTransactionAllService,
-    getTransactionDetailService
+    getTransactionDetailService,
+    getBestSellerTransactionService,
 }

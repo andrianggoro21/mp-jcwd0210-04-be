@@ -69,8 +69,48 @@ const getTransactionDetailQuery =async (transactionId:number) => {
     }
 }
 
+const getBestSellerTransaction =async () => {
+    try {
+        const res = await prisma.transaction_Details.groupBy({
+            by: ['productId'],
+            _sum: {
+                quantity: true,
+            },
+        });
+
+        // Sort the result to get the best-selling product
+        const sortedResult = res.sort((a, b) => (b._sum?.quantity ?? 0) - (a._sum?.quantity ?? 0));
+
+        const bestSellerProductIds: number[] = sortedResult.map((item) => item.productId);
+
+        // Fetch details of all best-selling products in the sorted order
+        const bestSellerProducts = await prisma.products.findMany({
+            where: {
+                id: {
+                    in: bestSellerProductIds,
+                },
+            },
+            orderBy: {
+                id: 'asc', // Order by ID in descending order
+            },
+            include: {
+                transaction_details: {
+                    include: {
+                        transaction: true
+                    }
+                }, // Include the transaction_details relationship
+            },
+        });
+
+        return bestSellerProducts;
+    } catch (err) {
+        throw err
+    }
+}
+
 export = { 
     getTransactionGraphQuery,
     getTransactionAllQuery,
-    getTransactionDetailQuery
+    getTransactionDetailQuery,
+    getBestSellerTransaction,
 }
