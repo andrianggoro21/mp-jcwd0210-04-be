@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 const createTransactionQuery = async (
   userId: number,
-  date: Date,
   totalQuantity: number,
   totalPrice: number,
   payment_methodId: number,
@@ -15,7 +14,6 @@ const createTransactionQuery = async (
     const res = await prisma.transactions.create({
       data: {
         userId: userId,
-        date: date,
         totalQuantity: totalQuantity,
         totalPrice: totalPrice,
         payment_methodId: payment_methodId,

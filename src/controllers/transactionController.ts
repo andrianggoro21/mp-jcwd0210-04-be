@@ -8,7 +8,6 @@ const createTransactionController = async (
   try {
     const {
       userId,
-      date,
       totalQuantity,
       totalPrice,
       payment_methodId,
@@ -22,8 +21,7 @@ const createTransactionController = async (
     const numPaymentAmount = Number(paymentAmount);
     const numPaymentChange = Number(paymentChange);
     const result = await transactionService.createTransactionService(
-      userId,
-      date,
+      numUserId,
       numTotalQuantity,
       numTotalPrice,
       numPayment_methodId,
