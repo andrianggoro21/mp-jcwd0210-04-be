@@ -19,14 +19,18 @@ const getTransactionGraphQuery = async () : Promise<TransactionGroupByResult[]> 
     }
 }
 
-const getTransactionAllQuery =async (startDate?: string, endDate?: string) => {
+const getTransactionAllQuery =async (page: number, pageSize: number, startDate?: string, endDate?: string) => {
     try {
+        
+        const skip = (page - 1) * pageSize;
+        const take = pageSize
 
         const whereClause: {
             date?: {
                 gte?: Date;
                 lte?: Date;
             };
+            
         } = {};
         
         if (startDate && endDate) {
@@ -36,7 +40,11 @@ const getTransactionAllQuery =async (startDate?: string, endDate?: string) => {
             };
         }
 
+       
+
         const res = await prisma.transactions.findMany({
+            skip,
+            take,
             where: whereClause,
             include: {
                 user: true,
@@ -108,9 +116,74 @@ const getBestSellerTransaction =async () => {
     }
 }
 
+const getUserAllQuery =async (page: number, pageSize: number, username: string,) => {
+    try {
+        const skip = (page - 1) * pageSize;
+        const take = pageSize
+
+        interface UserFilter {
+            username?: { contains: string };
+        }
+        const filter : UserFilter = {};
+        if (username) {
+            filter.username = {contains: username}
+        }
+      
+
+        const res = await prisma.users.findMany({
+            skip,
+            take,
+            where: filter,
+            include: {
+                transaction: true
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const getUserIdQuery =async (userId: number, page: number, pageSize: number, startDate: string, endDate: string) => {
+    try {
+        const skip = (page - 1) * pageSize;
+        const take = pageSize
+
+        const whereClause: {
+            id?: number;
+          } = {};
+      
+          if (userId) {
+            whereClause.id = userId;
+          }
+
+        const res = await prisma.users.findMany({
+           
+            where: whereClause,
+            include: {
+                transaction: {
+                    skip,
+                    take,
+                    where: {
+                      date: {
+                        gte: startDate ? new Date(startDate) : undefined,
+                        lte: endDate ? new Date(endDate) : undefined,
+                      },
+                    },
+                  },
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+ 
 export = { 
     getTransactionGraphQuery,
     getTransactionAllQuery,
     getTransactionDetailQuery,
     getBestSellerTransaction,
+    getUserAllQuery,
+    getUserIdQuery
 }
