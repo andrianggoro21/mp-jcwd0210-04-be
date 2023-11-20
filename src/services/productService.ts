@@ -15,7 +15,7 @@ const getProductAllService =async (page: number, pageSize: number) => {
         const res = await productQueries.getProductAllQuery(page, pageSize)
         return res
     } catch (err) {
-        throw err
+        throw err 
     }
 }
 
