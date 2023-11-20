@@ -11,6 +11,8 @@ const createTransactionQuery = async (
   paymentChange: number
 ) => {
   try {
+    console.log('user', userId);
+    
     const res = await prisma.transactions.create({
       data: {
         userId: userId,
