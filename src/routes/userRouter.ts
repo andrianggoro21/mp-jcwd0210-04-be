@@ -4,7 +4,7 @@ const router = express.Router();
 import userControllers from "../controllers/userControllers";
 import multer = require("../middleware/multer");
 
-router.post("/", userControllers.createUserController);
+router.post("/register", userControllers.createUserController);
 router.get("/", userControllers.getUserAllController);
 router.patch("/update/:userId", userControllers.updateUserController);
 
