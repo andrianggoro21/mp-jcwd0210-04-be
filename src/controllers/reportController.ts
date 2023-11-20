@@ -14,6 +14,19 @@ const getTransactionGraphController = async (req: Request, res: Response) => {
     } 
 }
 
+const getTransactionController =async (req: Request, res: Response) => {
+    try {
+        const result = await reportService.getTransactionService();
+        return res.status(200).json({
+            message: "success",
+            data: result
+        })
+    } catch (err: any) {
+        console.error('Error in getProductAllController:', err);
+        return res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+}
+
 const getTransactionAllController = async (req: Request, res: Response) => {
     try {
         const {page, pageSize, startDate, endDate} = req.query
@@ -94,6 +107,7 @@ const getUserIdController = async (req: Request, res: Response) => {
 
 export = {
     getTransactionGraphController,
+    getTransactionController,
     getTransactionAllController,
     getTransactionDetailController,
     getBestSellerTransactionController,

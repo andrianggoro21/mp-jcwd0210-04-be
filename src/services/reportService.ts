@@ -9,6 +9,15 @@ const getTransactionGraphService = async () => {
     }
 }
 
+const getTransactionService =async () => {
+    try {
+        const res = await reportQuery.getTransactionQuery()
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 const getTransactionAllService =async (page: number, pageSize: number, startDate: string, endDate: string) => {
     try {
         const res = await reportQuery.getTransactionAllQuery(page, pageSize, startDate, endDate)
@@ -57,6 +66,7 @@ const getUserIdService =async (userId: number, page: number, pageSize: number, s
 
 export = {
     getTransactionGraphService,
+    getTransactionService,
     getTransactionAllService,
     getTransactionDetailService,
     getBestSellerTransactionService,

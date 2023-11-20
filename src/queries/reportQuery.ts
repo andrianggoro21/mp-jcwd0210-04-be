@@ -19,6 +19,20 @@ const getTransactionGraphQuery = async () : Promise<TransactionGroupByResult[]> 
     }
 }
 
+const getTransactionQuery =async () => {
+    try {
+        const res = await prisma.transactions.findMany({
+            include: {
+                user: true,
+                transaction_details: true
+            }
+        })
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
 const getTransactionAllQuery =async (page: number, pageSize: number, startDate?: string, endDate?: string) => {
     try {
         
@@ -39,8 +53,6 @@ const getTransactionAllQuery =async (page: number, pageSize: number, startDate?:
                 lte: new Date(endDate),
             };
         }
-
-       
 
         const res = await prisma.transactions.findMany({
             skip,
@@ -181,6 +193,7 @@ const getUserIdQuery =async (userId: number, page: number, pageSize: number, sta
  
 export = { 
     getTransactionGraphQuery,
+    getTransactionQuery,
     getTransactionAllQuery,
     getTransactionDetailQuery,
     getBestSellerTransaction,
