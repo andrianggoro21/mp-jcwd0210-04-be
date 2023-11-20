@@ -10,7 +10,7 @@ router.post(
 );
 
 router.patch(
-  "/update/:userId",
+  "/update_profile",
   multer.UploadUpdate_ProfileFile,
   update_profileController.updateUpdate_profileController
 );
