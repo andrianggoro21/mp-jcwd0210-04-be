@@ -28,7 +28,7 @@ app.use(cors(corsOptions));
 
 // app.use("/", routes);
 import routerUser = require("./routes/userRouter");
-app.use("/", routerUser);
+app.use("/auth", routerUser);
 import login from "./routes/loginRouter";
 app.use("/auth", login);
 import routerProduct = require("./routes/productRouter");

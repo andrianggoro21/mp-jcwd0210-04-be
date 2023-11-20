@@ -3,17 +3,17 @@ import userService from "../services/userService";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const { username, email, password, phoneNumber, address, roleId } =
+    const { username, email, password, phoneNumber, address, avatar, roleId } =
       req.body;
-    const numRoleId = Number(roleId);
     const result = await userService.createUserService(
       username,
       email,
       password,
       phoneNumber,
       address,
-      req.file?.filename || "",
+      avatar,
       roleId
+      // req.file?.filename || ""
     );
     return res.status(200).json({
       message: "Success",
