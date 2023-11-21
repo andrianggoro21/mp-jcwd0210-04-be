@@ -21,7 +21,17 @@
 //     }
 // }
 
-// export = {
-//   createUpdate_profileService,
-//   updateUpdate_profileService,
-// };
+const getProfileService =async () => {
+    try {
+        const res = await update_profileQuery.getProfileQuery()
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+export = {
+  createUpdate_profileService,
+  updateUpdate_profileService,
+  getProfileService,
+};

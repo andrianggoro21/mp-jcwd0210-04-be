@@ -9,10 +9,12 @@
 //   update_profileController.createUpdate_profileController
 // );
 
-// router.patch(
-//   "/update/:userId",
-//   multer.UploadUpdate_ProfileFile,
-//   update_profileController.updateUpdate_profileController
-// );
+router.patch(
+  "/:id",
+  multer.UploadUpdate_ProfileFile,
+  update_profileController.updateUpdate_profileController
+);
 
-// export = router;
+router.get("/profile", update_profileController.getProfileController)
+
+export = router;

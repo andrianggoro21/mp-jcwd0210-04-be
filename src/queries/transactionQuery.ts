@@ -51,37 +51,37 @@ const getTransactionAllQuery = async () => {
   }
 };
 
-// const updateTransactionQuery = async (
-//   date: Date,
-//   totalQuantity: number,
-//   totalPrice: number,
-//   payment_methodId: number,
-//   paymentAmount: number,
-//   paymentChange: number
-// ) => {
-//   try {
-//     const res = await prisma.transactions.updateMany({
-//       where: {
-//         Id: transactionId,
-//       },
-//       data: {
-//         date: date,
-//         totalQuantity: totalQuantity,
-//         totalPrice: totalPrice,
-//         payment_methodId: payment_methodId,
-//         paymentAmount: paymentAmount,
-//         paymentChange: paymentChange,
-//       },
-//     });
-//     return res;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+const updateTransactionQuery = async (
+  date: Date,
+  totalQuantity: number,
+  totalPrice: number,
+  payment_methodId: number,
+  paymentAmount: number,
+  paymentChange: number
+) => {
+  try {
+    const res = await prisma.transactions.updateMany({
+      where: {
+        // Id: transactionId,
+      },
+      data: {
+        date: date,
+        totalQuantity: totalQuantity,
+        totalPrice: totalPrice,
+        payment_methodId: payment_methodId,
+        paymentAmount: paymentAmount,
+        paymentChange: paymentChange,
+      },
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
 
 export = {
   createTransactionQuery,
   getTransactionAllQuery,
   getTransactionByIdQuery,
-  // updateTransactionQuery,
+  updateTransactionQuery,
 };
