@@ -4,7 +4,7 @@
 
 // const createUpdate_profileQuery = async (image: string) => {
 //   try {
-//     const res = await prisma.update_Profile.create({
+//     const res = await prisma.U.create({
 //       data: {
 //         image: image,
 //       },
@@ -44,8 +44,18 @@
 //    }
 // }
 
+// const getProfileQuery =async () => {
+//   try {
+//     const res = await prisma.update_Profile.findMany()
+//     return res
+//   } catch (err) {
+//     throw err
+//   }
+// }
+
 // export = {
 //   createUpdate_profileQuery,
 //   updateUpdate_profileQuery,
 //   findUpdate_profileQuery,
+//   getProfileQuery
 // };

@@ -28,7 +28,7 @@ import routerTransaction_details = require("./routes/transaction_detailsRouter")
 app.use("/transaction_details", routerTransaction_details);
 
 // import routerUpdate_Profile = require("./routes/update_profileRouter");
-// app.use("/update_profile", routerUpdate_Profile);
+// app.use("/profile", routerUpdate_Profile);
 import routerCategory = require("./routes/categoryRouter");
 app.use("/category", routerCategory)
 import routerReport = require("./routes/reportRouter");
