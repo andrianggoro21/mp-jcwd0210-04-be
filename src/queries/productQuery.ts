@@ -72,7 +72,10 @@ const getProductPaginationQuery = async (page: number, pageSize: number, product
         const res = await prisma.products.findMany({
             skip,
             take,
-            where: filter
+            where: filter,
+            include: {
+                category: true
+            }
         })
         return res
     } catch (err) {
