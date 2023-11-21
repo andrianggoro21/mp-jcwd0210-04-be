@@ -44,8 +44,18 @@ const updateUpdate_profileQuery = async (image: string, userId: number) => {
    }
 }
 
+const getProfileQuery =async () => {
+  try {
+    const res = await prisma.update_Profile.findMany()
+    return res
+  } catch (err) {
+    throw err
+  }
+}
+
 export = {
   createUpdate_profileQuery,
   updateUpdate_profileQuery,
   findUpdate_profileQuery,
+  getProfileQuery
 };

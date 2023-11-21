@@ -10,9 +10,11 @@ router.post(
 );
 
 router.patch(
-  "/update_profile",
+  "/:id",
   multer.UploadUpdate_ProfileFile,
   update_profileController.updateUpdate_profileController
 );
+
+router.get("/profile", update_profileController.getProfileController)
 
 export = router;

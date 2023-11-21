@@ -33,7 +33,20 @@ const updateUpdate_profileController = async (req: Request, res: Response) => {
     }
 }
 
+const getProfileController = async (req: Request, res: Response) => {
+  try {
+    const result = await update_profileService.getProfileService()
+    return res.status(200).json({
+      message: "get Profile Success",
+      data: result,
+    });
+  } catch (err) {
+    console.error("Error in createUpdate_ProfileController:", err);
+  }
+};
+
 export = {
     createUpdate_profileController,
     updateUpdate_profileController,
+    getProfileController
 }
